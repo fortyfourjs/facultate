@@ -22,9 +22,30 @@ public:
         this->item_level = item_level;
     }
 
+    Item(const Item& other)
+    {
+        item_name = new char[MAX];
+        strncpy(item_name, other.item_name, MAX);
+        quantity = other.quantity;
+        item_level = other.item_level;
+    }
+
+    Item& operator=(const Item& other)
+    {
+        if(this != &other)
+        {
+            char* new_name = new char[MAX];
+            strncpy(new_name, other.item_name, MAX);
+            delete[] item_name;
+            item_name = new_name;
+            quantity = other.quantity;
+            item_level = other.item_level;
+        }
+        return *this;
+    }
     void display() const
     {
-        cout << "---Item---" << '\n';
+
         cout << "Name: " << item_name << '\n';
         cout << "Quantity: " << quantity << '\n';
         cout << "ilvl: " << item_level << '\n';
@@ -45,10 +66,10 @@ public:
         return item_level;
     }
 
-    ~Item()
-    {
-        delete[] item_name;
-    }
+~Item()
+{
+    delete[] item_name;
+}
 
 };
 
@@ -91,17 +112,14 @@ class Inventory
 
 int main()
 {
-  Item* item1 = new Item("Sword", 5, 69);
-  Item copy(*item1);
-  Inventory inventory(10);
-  inventory.addItem(&copy);
-  inventory.displayInventory();
-  delete item1;
+  Inventory bags(10);
+  Item item1("Sword", 5, 69);
+  bags.addItem(&item1);
+  bags.displayInventory();
+  Item item2("Axe", 1, 75);
+  bags.addItem(&item2);
+  bags.displayInventory();
 
 
-
-
-
-
-    return 0;
+return 0;
 }
