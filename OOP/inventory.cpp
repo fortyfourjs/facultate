@@ -17,7 +17,6 @@ public:
     {
         this->item_name = new char[MAX];
         strncpy(this->item_name, item_name, MAX - 1);
-        this->item_name[MAX - 1] = '\0';
         this->quantity = quantity;
         this->item_level = item_level;
     }
@@ -61,7 +60,7 @@ public:
         return quantity;
     }
 
-    int getItemLevel()
+    int getItemLevel() const
     {
         return item_level;
     }
@@ -79,16 +78,23 @@ class Inventory
     private:
         vector<Item> items;
         int capacity;
+        vector<int> itemLevels;
 
     public:
-        Inventory(int capacity) : capacity(capacity){}
+        Inventory(int capacity) : capacity(capacity)
+        {
+            items.reserve(capacity);
+            itemLevels.reserve(capacity);
+        }
 
     void addItem(const Item* newItem)
     {
         if(newItem != nullptr)
         {
         items.push_back(*newItem);
+        itemLevels.push_back(newItem->getItemLevel());
         }
+        
     }
     void removeItem(int index)
     {
@@ -108,18 +114,86 @@ class Inventory
         }
     }
 
+     void displayItemLevels() const
+    {
+        cout << "Item levels: \n";
+        for(const auto& level : itemLevels)
+        {
+            cout << level << '\n';
+        }
+    }
+
+    vector<int>& getItemLevels() 
+    {
+        return itemLevels;
+    }
+
 };
+
+int partition(int itemLevels[], int low, int high)
+{
+    int pivot = itemLevels[high];
+    int i = (low - 1);
+
+    for(int j = low; j <= high; j++)
+    {
+        if(itemLevels[j] < pivot)
+        {
+            i++;
+            swap(itemLevels[i],itemLevels[j]);
+        }
+    }
+    swap(itemLevels[i+1],itemLevels[high]);
+    return (i+1);
+
+}
+
+void quickSort(int itemLevels[], int low, int high)
+{
+    if(low < high)
+    {
+        int pi = partition(itemLevels, low, high);
+
+        quickSort(itemLevels, low, pi - 1);
+        quickSort(itemLevels, pi + 1, high);
+    }
+}
+
 
 int main()
 {
   Inventory bags(10);
-  Item item1("Sword", 5, 69);
+  Item item1("Frostmourne", 1, 69);
   bags.addItem(&item1);
-  bags.displayInventory();
-  Item item2("Axe", 1, 75);
+  Item item2("Chaotic-Axe", 1, 75);
   bags.addItem(&item2);
-  bags.displayInventory();
+  Item item3("Shattering-Katana", 1, 80);
+  Item item4("Howling Abyss", 1, 35);
+  Item item5("idontknow", 1, 98);
+  Item item6("whoknows", 1, 72);
+  bags.addItem(&item3);
+  bags.addItem(&item4);
+  bags.addItem(&item5);
+  bags.addItem(&item6);
+  bags.displayInventory();  
+  bags.displayItemLevels();
+  cout << '\n';
+
+  cout << "Before sorting ";
+  bags.displayItemLevels();
+  cout << '\n';
+
+  vector<int>& levels = bags.getItemLevels();
+  quickSort(levels.data(), 0, levels.size() - 1);
+
+  cout << "After sorting ";
+  bags.displayItemLevels();
+  cout << '\n';
+ 
 
 
-return 0;
+
+
+    return 0;
+
 }
