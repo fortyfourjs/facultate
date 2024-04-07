@@ -11,14 +11,18 @@ private:
     char* item_name;
     int quantity;
     int item_level;
+    int durability;
+    int weight;
     
 public:
-    Item(const char* item_name = "", int quantity = 0, int item_level = 0)
+    Item(const char* item_name = "", int quantity = 0, int item_level = 0, int durability = 0, int weight = 0)
     {
         this->item_name = new char[MAX];
         strncpy(this->item_name, item_name, MAX - 1);
         this->quantity = quantity;
         this->item_level = item_level;
+        this->durability = durability;
+        this->weight = weight;
     }
 
     Item(const Item& other)
@@ -27,6 +31,8 @@ public:
         strncpy(item_name, other.item_name, MAX);
         quantity = other.quantity;
         item_level = other.item_level;
+        durability = other.durability;
+        weight = other.weight;
     }
 
     Item& operator=(const Item& other)
@@ -39,6 +45,8 @@ public:
             item_name = new_name;
             quantity = other.quantity;
             item_level = other.item_level;
+            durability = other.durability;
+            weight = other.weight;
         }
         return *this;
     }
@@ -48,6 +56,8 @@ public:
         cout << "Name: " << item_name << '\n';
         cout << "Quantity: " << quantity << '\n';
         cout << "ilvl: " << item_level << '\n';
+        cout << "durability: " << durability << "/100" << '\n';
+        cout << "weight: " << weight << "lbs" << '\n';
     }
 
     char* getItemName()
@@ -65,6 +75,16 @@ public:
         return item_level;
     }
 
+    int getDurability()
+    {
+        return durability;
+    }
+
+    int getWeight()
+    {
+        return weight;
+    }
+
 ~Item()
 {
     delete[] item_name;
@@ -75,8 +95,8 @@ public:
 class Weapon : public Item
 {
     public:
-        Weapon(const char* item_name, int quantity = 0, int item_level = 0)
-            : Item(item_name, quantity, item_level){}
+        Weapon(const char* item_name, int quantity = 0, int item_level = 0, int durability = 0, int weight = 0)
+            : Item(item_name, quantity, item_level, durability, weight){}
         
         virtual void display() const override
         {
@@ -88,8 +108,8 @@ class Weapon : public Item
 class Armor : public Item
 {
     public:
-        Armor(const char* item_name, int quantity = 0, int item_level = 0)
-            : Item(item_name, quantity, item_level){}
+        Armor(const char* item_name, int quantity = 0, int item_level = 0, int durability = 0, int weight = 0)
+            : Item(item_name, quantity, item_level, durability, weight){}
         
         virtual void display() const override
         {
@@ -188,14 +208,14 @@ void quickSort(int itemLevels[], int low, int high)
 int main()
 {
   Inventory bags(10);
-  Item* item1 = new Weapon("Frostmourne", 1, 69);
+  Item* item1 = new Weapon("Frostmourne", 1, 69, 50, 30);
   bags.addItem(item1);
-  Item* item2 = new Weapon("Chaotic-Axe", 1, 75);
+  Item* item2 = new Weapon("Chaotic-Axe", 1, 75, 90, 50);
   bags.addItem(item2);
-  Item* item3 = new Weapon("Shattering-Katana", 1, 80);
-  Item* item4 = new Armor("Howling Abyss", 1, 35);
-  Item* item5 = new Armor("idontknow", 1, 98);
-  Item* item6 = new Armor("whoknows", 1, 72);
+  Item* item3 = new Weapon("Shattering-Katana", 1, 80, 100, 20);
+  Item* item4 = new Armor("Howling Abyss", 1, 35, 65, 10);
+  Item* item5 = new Armor("idontknow", 1, 98, 34, 15);
+  Item* item6 = new Armor("whoknows", 1, 72, 96, 22);
   bags.addItem(item3);
   bags.addItem(item4);
   bags.addItem(item5);
