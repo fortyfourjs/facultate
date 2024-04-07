@@ -134,6 +134,11 @@ class Inventory
 
     void addItem(Item* newItem)
     {
+        if(items.size() >= capacity)
+        {
+            cout <<"Inventory full" << '\n';
+            return;
+        }
         if(newItem != nullptr)
         {
         items.push_back(newItem);
@@ -150,7 +155,7 @@ class Inventory
     }
     void displayInventory()
     {
-        cout << "capacity: " << capacity << '\n';
+        cout << "Inventory capacity: " << capacity << '\n';
         cout << "Items:\n";
         for(const auto& item : items)
         {
@@ -207,7 +212,7 @@ void quickSort(int itemLevels[], int low, int high)
 
 int main()
 {
-  Inventory bags(10);
+  Inventory bags(6);
   Item* item1 = new Weapon("Frostmourne", 1, 69, 50, 30);
   bags.addItem(item1);
   Item* item2 = new Weapon("Chaotic-Axe", 1, 75, 90, 50);
