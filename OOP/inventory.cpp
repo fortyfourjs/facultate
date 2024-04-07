@@ -42,7 +42,7 @@ public:
         }
         return *this;
     }
-    void display() const
+    virtual void display() const
     {
 
         cout << "Name: " << item_name << '\n';
@@ -78,7 +78,7 @@ class Weapon : public Item
         Weapon(const char* item_name, int quantity = 0, int item_level = 0)
             : Item(item_name, quantity, item_level){}
         
-        virtual void display() const
+        virtual void display() const override
         {
             cout << "---Weapon---\n";
             Item::display();
@@ -91,7 +91,7 @@ class Armor : public Item
         Armor(const char* item_name, int quantity = 0, int item_level = 0)
             : Item(item_name, quantity, item_level){}
         
-        virtual void display() const
+        virtual void display() const override
         {
             cout << "---Armor---\n";
             Item::display();
@@ -101,7 +101,7 @@ class Armor : public Item
 class Inventory
 {
     private:
-        vector<Item> items;
+        vector<Item*> items;
         int capacity;
         vector<int> itemLevels;
 
@@ -112,11 +112,11 @@ class Inventory
             itemLevels.reserve(capacity);
         }
 
-    void addItem(const Item* newItem)
+    void addItem(Item* newItem)
     {
         if(newItem != nullptr)
         {
-        items.push_back(*newItem);
+        items.push_back(newItem);
         itemLevels.push_back(newItem->getItemLevel());
         }
         
@@ -134,7 +134,7 @@ class Inventory
         cout << "Items:\n";
         for(const auto& item : items)
         {
-            item.display();
+            item->display();
             cout << '\n';
         }
     }
@@ -188,18 +188,18 @@ void quickSort(int itemLevels[], int low, int high)
 int main()
 {
   Inventory bags(10);
-  Item item1("Frostmourne", 1, 69);
-  bags.addItem(&item1);
-  Item item2("Chaotic-Axe", 1, 75);
-  bags.addItem(&item2);
-  Item item3("Shattering-Katana", 1, 80);
-  Item item4("Howling Abyss", 1, 35);
-  Item item5("idontknow", 1, 98);
-  Item item6("whoknows", 1, 72);
-  bags.addItem(&item3);
-  bags.addItem(&item4);
-  bags.addItem(&item5);
-  bags.addItem(&item6);
+  Item* item1 = new Weapon("Frostmourne", 1, 69);
+  bags.addItem(item1);
+  Item* item2 = new Weapon("Chaotic-Axe", 1, 75);
+  bags.addItem(item2);
+  Item* item3 = new Weapon("Shattering-Katana", 1, 80);
+  Item* item4 = new Armor("Howling Abyss", 1, 35);
+  Item* item5 = new Armor("idontknow", 1, 98);
+  Item* item6 = new Armor("whoknows", 1, 72);
+  bags.addItem(item3);
+  bags.addItem(item4);
+  bags.addItem(item5);
+  bags.addItem(item6);
   bags.displayInventory();  
   bags.displayItemLevels();
   cout << '\n';
@@ -216,9 +216,10 @@ int main()
   cout << '\n';
  
 
+ delete item1, item2, item3, item4, item5, item6;
 
 
 
-    return 0;
+ return 0;
 
 }
