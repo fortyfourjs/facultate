@@ -72,6 +72,31 @@ public:
 
 };
 
+class Weapon : public Item
+{
+    public:
+        Weapon(const char* item_name, int quantity = 0, int item_level = 0)
+            : Item(item_name, quantity, item_level){}
+        
+        virtual void display() const
+        {
+            cout << "---Weapon---\n";
+            Item::display();
+        }
+};
+
+class Armor : public Item
+{
+    public:
+        Armor(const char* item_name, int quantity = 0, int item_level = 0)
+            : Item(item_name, quantity, item_level){}
+        
+        virtual void display() const
+        {
+            cout << "---Armor---\n";
+            Item::display();
+        }
+};
 
 class Inventory
 {
