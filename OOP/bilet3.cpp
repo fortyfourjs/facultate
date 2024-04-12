@@ -23,6 +23,12 @@ class Triunghi
         return true;
     }
 
+    void printLaturi()
+    {
+        cout << "l1=" << m_l1 << " l2=" << m_l2 << " l3=" << m_l3 << '\n';
+    }
+
+
     int getL1()
     {
         return m_l1;
@@ -53,33 +59,59 @@ class Triunghi
         m_l3 = l3;
     }
 
-    void printLaturi()
-    {
-        cout << "l1=" << m_l1 << " l2=" << m_l2 << " l3=" << m_l3 << '\n';
-    }
-
-
     int perimetru()
     {
         if(checkTriangle() == true)
         {
-            cout << "Perimetrul triunghiului=" << m_l1 + m_l2 + m_l3 <<'\n'; 
+            int perimetru = m_l1 + m_l2 + m_l3;
+            cout << "Perimetrul triunghiului=" << perimetru <<'\n'; 
+
+            return perimetru;
         }
         else
         {
             cout << "tot nu e triunghi" << '\n';
         }
+        return 0;
     }
 
     bool checkRightAngle()
     {
-        if(pow(m_l1, 2) + pow(m_l2, 2) == pow(m_l3, 2) || pow(m_l2, 2) + pow(m_l3, 2) == pow(m_l1, 2) || pow(m_l1, 2) + pow(m_l3, 2) == pow(m_l2, 2))
+        if(pow(m_l1, 2) + pow(m_l2, 2) == pow(m_l3, 2) || 
+           pow(m_l2, 2) + pow(m_l3, 2) == pow(m_l1, 2) || 
+           pow(m_l1, 2) + pow(m_l3, 2) == pow(m_l2, 2))
         {
             cout << "triunghiul este dreptunghic" << '\n';
+
+            return true;
         }
         else
         {
         cout << "nu e dreptunghic" << '\n';
+
+            return false;
+        }
+
+        
+    }
+
+    int aria()
+    {
+        int semiperimetru = (m_l1 + m_l2 + m_l3) / 2;
+
+        if(checkTriangle() == true)
+        {
+            int aria = sqrt((semiperimetru - m_l1)*(semiperimetru - m_l2)*(semiperimetru - m_l3));
+            
+            cout << "Aria triunghiului=" << aria << '\n';
+
+            return aria;
+        }
+        else
+        {
+            cout << "idk man" << '\n';
+
+            return 0;
         }
     }
 
@@ -97,5 +129,7 @@ int main()
     echilateral.checkTriangle();
     echilateral.perimetru();
     echilateral.checkRightAngle();
+    echilateral.aria();
 
+    return 0;
 }
