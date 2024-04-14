@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class Pacient
     public:
         Pacient(const char* nume, const char* prenume, int varsta, const char* diagnostic);
         ~Pacient();
+        
 
     char* getNume();
     void setNume(const char* nume);
@@ -21,11 +23,13 @@ class Pacient
     char* getPrenume();
     void setPrenume(const char* prenume);
 
-    int getVarsta();
+    int getVarsta() const;
     void setVarsta(int varsta);
 
     char* getDiagnostic();
     void setDiagnostic(const char* diagnostic);
+
+    void afiseazaDetalii() const;
 };
 
 Pacient::Pacient(const char* nume, const char* prenume, int varsta, const char* diagnostic)
@@ -40,14 +44,6 @@ Pacient::Pacient(const char* nume, const char* prenume, int varsta, const char* 
 
     this->diagnostic = new char[strlen(diagnostic) + 1];
     strcpy(this->diagnostic, diagnostic);
-
-}
-
-Pacient::~Pacient()
-{
-    delete[] nume;
-    delete[] prenume;
-    delete[] diagnostic;
 
 }
 
@@ -75,7 +71,7 @@ void Pacient::setPrenume(const char* prenume)
     strcpy(this->prenume, prenume);
 }
 
-int Pacient::getVarsta()
+int Pacient::getVarsta() const
 {
     return varsta;
 }
@@ -96,14 +92,99 @@ void Pacient::setDiagnostic(const char* diagnostic)
     this->diagnostic = new char[strlen(diagnostic) + 1];
     strcpy(this->diagnostic, diagnostic);
 }
+/*
+Pacient::Pacient(const Pacient& other)
+{
+    nume = new char[strlen(other.nume) + 1];
+    strcpy(nume, other.nume);
+
+    prenume = new char[strlen(other.prenume) + 1];
+    strcpy(prenume, other.prenume);
+
+    varsta = other.varsta;
+
+    diagnostic = new char[strlen(other.diagnostic) + 1];
+    strcpy(diagnostic, other.diagnostic);
+}
+
+Pacient& Pacient::operator=(const Pacient& other)
+{
+    if (this == &other)
+        return *this;
+    
+    delete[] nume;
+    delete[] prenume;
+    delete[] diagnostic;
+    
+    nume = new char[strlen(other.nume) + 1];
+    strcpy(nume, other.nume);
+
+    prenume = new char[strlen(other.prenume) + 1];
+    strcpy(prenume, other.prenume);
+
+    diagnostic = new char[strlen(other.diagnostic) + 1];
+    strcpy(diagnostic, other.diagnostic);
+
+    return *this;
+}
+*/
+void Pacient::afiseazaDetalii() const
+{
+    cout << "nume: " << nume << '\n';
+    cout << "prenume: " << prenume << '\n';
+    cout << "varsta:  " << varsta << '\n';
+    cout << "diagnostic:  " << diagnostic << '\n';
+    cout << "--------------------\n";
+}
+
+bool sorteazaVarsta(const Pacient& p1, const Pacient& p2)
+{
+    return p1.getVarsta() < p2.getVarsta();
+}
+
+Pacient::~Pacient()
+{
+    if(nume != nullptr)
+    {
+        delete[] nume;
+        nume = nullptr;
+    }
+    
+    if(prenume != nullptr)
+    {
+        delete[] prenume;
+        prenume = nullptr;
+    }
+    
+    if(diagnostic != nullptr)
+    {
+        delete[] diagnostic;
+        diagnostic = nullptr;
+    }
+
+}
+
+
 
 int main()
 {
-    Pacient pacient1("Alex", "Groparu", 29, "H1N1");
-    cout << "Nume: " << pacient1.getNume() << '\n';
-    cout << "Prenume: " << pacient1.getPrenume() << '\n';
-    cout << "Varsta: " << pacient1.getVarsta() << '\n';
-    cout << "Diagnostic: " << pacient1.getDiagnostic() << '\n';
+    Pacient pacienti[] =
+    {
+        Pacient("Ion", "Groparu", 26, "Raceala"),
+        Pacient("Alice", "Williams", 21, "Febra"),
+        Pacient("Emma", "Watson", 29, "Durere de cap"),
+        Pacient("Mihaela", "I.", 24, "Depresie")
+    };
+    
+    const int numPacienti = sizeof(pacienti) / sizeof(pacienti[0]);
+
+    sort(pacienti, pacienti + numPacienti, sorteazaVarsta);
+
+    for(int i = 0; i < numPacienti; i++)
+    {
+        pacienti[i].afiseazaDetalii();
+    }
+
 
     return 0;
 }
