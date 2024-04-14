@@ -43,7 +43,37 @@ class DataCalendaristica
 
         void printDataCalendaristica()
         {
-            cout << (m_luna < 10 ? '0' : ' ') << m_luna << "/" << (m_zi < 10 ? '0' : ' ') << m_zi + 1 << "/" << m_an << '\n';  // hehe +1 
+            cout << (m_luna < 10 ? '0' : ' ') << m_luna << "/" << (m_zi < 10 ? '0' : ' ') << m_zi << "/" << m_an << '\n';  // hehe +1 
+        }
+
+        bool esteAnBisect() const
+        {
+            return(m_an % 4 == 0 && m_an % 100 != 0) || (m_an % 400 == 0);
+        }
+
+        int zileInLuna() const
+        {
+            switch(m_luna)
+            {
+                case 4: case 6: case 9: case 11: return 30;
+                case 2: return esteAnBisect() ? 29 : 28;
+                default: return 30;
+            }
+        }
+
+        void urmatoareaZi()
+        {
+            m_zi++;
+            if(m_zi > zileInLuna())
+            {
+                m_zi = 1;
+                m_luna++;
+                if(m_luna > 12)
+                {
+                    m_luna = 1;
+                    m_an++;
+                }
+            }
         }
 };
 int main()
@@ -51,9 +81,11 @@ int main()
 
 DataCalendaristica data_unu{};
 data_unu.setAn(2021);
-data_unu.setZi(5);
-data_unu.setLuna(7);
+data_unu.setZi(30);
+data_unu.setLuna(4);
 
+data_unu.printDataCalendaristica();
+data_unu.urmatoareaZi();
 data_unu.printDataCalendaristica();
 
 }
