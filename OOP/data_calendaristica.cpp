@@ -94,8 +94,8 @@ int main()
     int diferentaZile = zile2 - zile1;
 
     int numarSaptamani = data_doi.saptamaniAn(0, data_doi.getAn());
-    cout << numarSaptamani;
-    cout << "diferenta: " << diferentaZile << '\n';
+    cout << "saptamana: " << numarSaptamani << '\n';
+    cout << "diferenta: " << diferentaZile << " zile" << '\n';
 
 
     return 0;
