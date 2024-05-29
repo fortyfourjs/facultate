@@ -1,0 +1,455 @@
+#functia recursiva care schimba un caracter cu altul
+def schimba(string,caracter_vechi,caracter_nou):
+    if len(string)==0:       #verificam daca sirul este gol
+        return string
+    # Înlocuim caracterul la indexul curent dacă este necesar
+    if string[0]==caracter_vechi:
+        return caracter_nou+schimba(string[1:],caracter_vechi,caracter_nou)
+    else:
+        return string[0]+schimba(string[1:],caracter_vechi,caracter_nou)
+
+input_string="Hello xorld"
+caracter_vechi="x"
+caracter_nou="w"
+print("Sirul original:",input_string)
+print("Sirul nou:",schimba(input_string,caracter_vechi,caracter_nou))
+'''
+1,Funcția primește trei argumente: string, old_char și new_char.
+string: Șirul în care se efectuează înlocuirea caracterului.
+old_char: Caracterul care trebuie înlocuit.
+new_char: Caracterul cu care se va înlocui caracterul vechi.
+2.Verificăm dacă string este gol, adică dacă nu mai sunt caractere de procesat. Dacă este cazul, funcția returnează șirul gol "", încheind recursivitatea.
+3.În caz contrar, funcția începe să proceseze șirul:
+Verificăm dacă primul caracter din string este egal cu old_char.
+Dacă da, înlocuim caracterul cu new_char și adăugăm new_char la începutul șirului rezultat, apelând recursiv funcția pentru restul șirului (string[1:]).
+Dacă primul caracter nu este old_char, îl păstrăm și apelăm recursiv funcția pentru restul șirului (string[1:]).
+4.Funcția se reapelează recursiv până când se procesează întregul șir.
+5.La final, funcția returnează șirul modificat cu toate aparițiile caracterului vechi înlocuite cu caracterul nou.
+'''
+
+#functie care returneaza inversul unui string
+def palindrom(s):
+    return s==s[::-1]
+s="mama"
+ans=palindrom(s)
+if (ans):
+    print("Este palindrom")
+else:
+    print("Nu este palindrom")
+'''
+1.Funcția primește un singur argument, s, care este șirul de caractere pe care dorim să-l verificăm dacă este palindrom sau nu.
+2.În interiorul funcției, se folosește o expresie de tip slice (s[::-1]) pentru a obține șirul inversat. Expresia s[::-1] creează o copie a șirului s, dar în ordine inversă. Aceasta este o tehnică simplă și eficientă pentru a obține inversul unui șir în Python.
+3.Apoi, funcția compară șirul original s cu șirul inversat s[::-1] folosind operatorul de egalitate (==).
+4.Dacă cele două șiruri sunt identice (adică s este egal cu inversul său), atunci funcția returnează True, indicând că șirul dat este un palindrom.
+În caz contrar, funcția returnează False, indicând că șirul dat nu este un palindrom.
+'''
+
+#interschimbarea a 3 valori
+def schimba_val(a, b, c):
+    temp = a
+    a = b
+    b = c
+    c=temp
+    return a, b,c
+
+x = 5
+y = 10
+z = 13
+x, y, z = schimba_val(x, y, z)
+print("Valoarea lui x după schimb:", x)
+print("Valoarea lui y după schimb:", y)
+print("Valoarea lui z după schimb:", z)
+
+
+
+#eliminare pozitii impare dintr-o lista
+def print_sol():
+    for  j in range(n):
+        print(result[j],end=" ")
+    print()
+
+def valid(k):
+    for i in range(k):
+        if result[i] == result[k]:
+            return False
+    if result[k]%2==0 and result[k]!=k+1:
+        return False
+    return True
+def bkt(k):
+    for val in range(n):
+        result[k]=val+1
+        if valid(k):
+            if k==n-1: #am generat n numere valide si avem o solutie
+                print_sol() #afisam solutie
+            else:
+                bkt(k+1) #trecem la generarea urmatorului numar
+                
+n=int(input("n= "))
+result=[0]*n
+bkt(0)
+'''
+1.print_sol() - Această funcție este responsabilă pentru afișarea soluției curente (o permutare validă) stocată în lista result.
+2.valid(k) - Această funcție verifică dacă valoarea result[k] este validă în contextul soluției parțiale curente. Verificările includ:
+Verifică dacă valoarea result[k] se repetă în soluția parțială, iterând peste toate valorile anterioare din lista result.
+Verifică dacă valoarea result[k] este un număr par și nu este egal cu poziția sa (k + 1), ceea ce înseamnă că numerele pare nu sunt pe pozițiile lor corecte.
+Returnează True dacă valoarea este validă și False în caz contrar.
+3.bkt(k) - Această funcție este funcția principală care efectuează căutarea exhaustivă folosind backtracking.
+Pentru fiecare valoare posibilă val de la 1 la n, bkt(k) atribuie result[k] cu această valoare și verifică dacă această valoare este validă folosind funcția valid(k).
+Dacă valoarea este validă, algoritmul continuă căutarea pentru poziția următoare (k + 1) apelând recursiv bkt(k + 1).
+Când toate pozițiile sunt ocupate (când k este n - 1), adică o soluție completă a fost găsită, se apelează print_sol() pentru a afișa soluția.
+4.La final, utilizatorul introduce valoarea pentru n, iar apoi se inițializează o listă result de lungime n cu toate elementele inițializate la 0.  
+Apoi, se apelează funcția bkt(0) pentru a începe căutarea soluțiilor de la prima poziție.
+'''
+
+#o functie care numara aparitiile unui elem intr-o lista recursiv
+def numara(lst, elem):
+    # Verificăm dacă lista este goală
+    if not lst:
+        return 0
+    # Verificăm dacă primul element din listă este egal cu elementul căutat
+    if lst[0] == elem:
+        # Dacă da, adăugăm 1 la rezultat și apelăm recursiv funcția pentru restul listei
+        return 1 + numara(lst[1:], elem)
+    else:
+        # Dacă nu, apelăm recursiv funcția pentru restul listei
+        return numara(lst[1:], elem)
+# Exemplu de utilizare:
+my_list = [1, 2, 3, 4, 1, 2, 1, 3, 1]
+element = 1
+print("Numărul de apariții ale lui", element, "în listă:", numara(my_list, element))
+'''
+1.if not lst: return 0 =verifică dacă lista (lst) este goală. Dacă da, înseamnă că nu există niciun element în listă, 
+deci funcția returnează 0, indicând că numărul de apariții ale elementului în listă este zero.
+2.if lst[0] == elem:
+    return 1 + count_occurrences_recursive(lst[1:], elem)
+Dacă lista nu este goală, funcția verifică dacă primul element din listă (lst[0]) este egal cu elementul căutat (elem).
+Dacă sunt egale, funcția adaugă 1 la rezultat și apoi se apelează recursiv pentru a căuta aparițiile ulterioare ale elementului în restul listei 
+(lst[1:]).
+3.else:
+    return count_occurrences_recursive(lst[1:], elem)
+Dacă primul element din listă nu este egal cu elementul căutat, funcția se apelează recursiv pentru a căuta în restul listei (lst[1:]).
+4.Cazul de bază și cazul recursiv:
+Funcția folosește un model tipic de recursivitate, în care are un caz de bază (când lista este goală) și un caz recursiv (când se verifică elementele listei).
+În fiecare apel recursiv, funcția parcurge lista și își ajustează argumentele pentru a continua căutarea.
+'''
+
+
+#daca un numar este prim
+n=int(input("x="))
+def is_prime(n):
+    for i in range(2,n):
+        if n%i==0:
+            return False
+        return True        
+if is_prime(n):
+    print("E PRIM")
+else:
+    print("NU E PRIM") 
+    
+    
+#Par sau impar
+def parimp(n):
+    if n%2==0:
+        print("Par")
+    else:
+        print("Impar")             
+x=int(input("X="))
+parimp(x)
+
+
+#palindrom
+def pal(s):
+    if len(s)==0 or len(s)==1:
+        return True
+    return s[0]==s[len(s)-1]and pal(s[1:len(s)-1])
+#verfica daca primeul si ultimul caracter sunt egale ,apoi reapeleaza functia fara ele
+s="capac"
+print(pal(s))
+
+
+#numara cate spatii sunt intr-un sir de caractere
+def nr_spatii(s):
+    if len(s)==0:
+        return 0
+    if s[0]==' ':
+        return 1+nr_spatii(s[1:])
+    else:
+        return nr_spatii(s[1:])
+s=" a  b  c  d "
+print(nr_spatii(s))
+
+
+#vocala sau consoana
+def vocala(x):
+    v = "aeiou"
+    if x in v:
+        return True
+    return False
+print(vocala('b'))
+
+
+#factorial
+def f(n):
+    if n==1:
+        return 1
+    else:
+            return f(n-1)*n
+print(f(3))
+
+
+#inverseaza un sir recursiv
+def reverse(sir):
+    if len(sir)==0:
+        return sir
+    else:
+        return reverse(sir[1:])+sir[0]  
+    
+sir="abc"
+print(reverse(sir))
+
+
+#o functie care sa verifice daca o cheie apare intr-un dict
+def check_key(dictionary, key):
+    return key in dictionary
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+key_check = 'b'
+if check_key(my_dict, key_check):
+    print("Cheia", key_check, "există în dicționar.")
+else:
+    print("Cheia", key_check, "nu există în dicționar.")
+'''
+1.def check_key(dictionary, key):
+Funcția check_key este definită cu doi parametri: dictionary și key.
+dictionary reprezintă dicționarul în care dorim să căutăm cheia.
+key reprezintă cheia pe care vrem să o căutăm în dicționar.
+2.return key in dictionary
+Această linie de cod folosește operatorul in pentru a verifica dacă key există în dictionary.
+Dacă cheia key este găsită în dictionary, expresia key in dictionary va returna True, altfel va returna False.
+Rezultatul acestei expresii este returnat de funcție.
+3.my_dict = {'a': 1, 'b': 2, 'c': 3}
+key_to_check = 'b'....
+În acest exemplu, avem un dicționar my_dict și dorim să verificăm dacă cheia 'b' există în dicționar.
+Folosind funcția check_key, verificăm dacă cheia 'b' există în my_dict.
+În funcție de rezultatul returnat de check_key, afișăm un mesaj corespunzător care indică dacă cheia a fost găsită sau nu în dicționar.
+'''
+
+#verifica daca un strig este un nr float
+def is_float(s):
+    s = s.replace('.', '', 1)  # eliminăm punctul zecimal
+    s = s.replace('-', '', 1)  # eliminăm semnul minus
+    return s.isdigit()
+strings = ["3.14", "-2.718", "10", "abc", "3.14.15"]
+for s in strings:
+    if is_float(s):
+        print(f"{s} este un număr float.")
+    else:
+        print(f"{s} nu este un număr float.")
+
+
+
+#o functie care numara vocalele dintr-un string
+def count_vowels(s):
+    vowels = "aeiouAEIOU"  # Lista de vocale
+    count = 0
+    for char in s:
+        if char in vowels:
+            count += 1
+    return count
+input_string = "Hello World"
+print("Numărul de vocale din șir:", count_vowels(input_string))
+'''
+1.def count_vowels(s):
+Funcția count_vowels primește un singur parametru, s, care este șirul de caractere în care dorim să numărăm vocalele.
+2.vowels = "aeiouAEIOU"
+Definim o variabilă vowels care conține toate vocalele, atât literele mici, cât și cele mari. Acest lucru ne permite să verificăm fiecare caracter din șir pentru a vedea dacă este o vocală.
+3.count = 0
+Inițializăm un contor count la 0. Acesta va fi folosit pentru a număra câte vocale sunt în șirul dat.
+4.for char in s:
+Utilizăm un buclă for pentru a itera prin fiecare caracter char din șirul dat s.
+5.if char in vowels:
+    count += 1
+    În interiorul buclei for, verificăm dacă caracterul curent char este o vocală, verificând dacă se găsește în lista vowels.
+Dacă caracterul este o vocală, incrementăm contorul count pentru a reflecta că am găsit o vocală în șir.
+6.La final, returnăm valoarea contorului count, care reprezintă numărul total de vocale găsite în șir.
+'''
+
+
+#returneaza ultimul si penulimul element si le insereaza la inceputul ei
+def move(lst):
+    # Verificăm dacă lista are cel puțin două elemente
+    if len(lst) >= 2:
+        # Extragem ultimele două elemente
+        last_two = lst[-2:]
+        # Inserează ultimele două elemente la începutul listei
+        lst = last_two + lst
+    return lst
+
+my_list = [1, 2, 3, 4, 5]
+modified_list = move(my_list)
+print("Lista modificată:", modified_list)
+'''
+În interiorul funcției, se verifică dacă lista are cel puțin două elemente folosind if len(lst) >= 2.
+Dacă lista are cel puțin două elemente, extragem ultimele două elemente folosind lst[-2:], care returnează o sub-listă conținând ultimele două elemente ale listei.
+Apoi, concatenăm aceste două elemente cu lista originală folosind operatorul +.
+Lista rezultată este returnată.
+'''
+
+
+#o functie care transforma un numar in unul binar
+def decimal_to_binary(num):
+    binary_representation = bin(num)
+    return binary_representation
+
+decimal_number = 10
+binary_number = decimal_to_binary(decimal_number)
+print("Reprezentarea binară a lui", decimal_number, "este:", binary_number)
+
+'''
+1.Funcția decimal_to_binary este definită cu un singur parametru, num, care reprezintă numărul întreg pe care dorim să-l convertim într-un număr binar.
+2.binary_representation = bin(num)
+În interiorul funcției, apelăm funcția bin() cu argumentul num. Funcția bin() primește un număr întreg și returnează reprezentarea sa binară sub formă de șir de caractere.
+Rezultatul este stocat în variabila binary_representation, care va conține reprezentarea binară a numărului dat.
+'''
+#o functie care transforma un numar in unul hexazecimal
+def decimal_to_hexadecimal(number):
+    return hex(number)
+
+decimal_number = 255
+hexadecimal_number = decimal_to_hexadecimal(decimal_number)
+print("Numărul hexazecimal:", hexadecimal_number)
+'''
+Funcția hex() este utilizată pentru a converti numărul dat în formatul hexazecimal.
+Valoarea returnată de hex() este apoi returnată de funcția noastră.
+'''
+#o functie care transforma un numar in unul octal
+def to_octal(decimal_number):
+    octal_number = oct(decimal_number)
+    return octal_number
+
+decimal_number = 42
+octal_number = to_octal(decimal_number)
+print("Numărul octal pentru", decimal_number, "este:", octal_number)
+'''
+1.Funcția to_octal este definită cu un singur parametru, decimal_number, care reprezintă numărul în sistemul zecimal pe care dorim să-l convertim în sistemul octal.
+2.octal_number = oct(decimal_number)
+Folosim funcția predefinită oct() pentru a converti decimal_number în sistemul octal.
+Această funcție primește un argument (numărul în sistemul zecimal) și returnează reprezentarea sa în sistemul octal.
+'''
+
+#calculeaza suma cifrelor unui numar
+def sum_of_digits(number):
+    # Inițializăm suma cu 0
+    sum_digits = 0
+    # Iterăm până când numărul devine 0
+    while number != 0:
+        # Extragem ultima cifră a numărului și o adăugăm la suma
+        sum_digits += number % 10
+        # Împărțim numărul la 10 pentru a elimina ultima cifră
+        number //= 10
+    return sum_digits
+
+num = 12345
+print("Suma cifrelor lui", num, "este:", sum_of_digits(num))
+'''
+Inițializăm suma cifrelor cu 0.
+Folosindtr-un buclă while, iterăm până când numărul devine 0.
+În fiecare iterație, extragem ultima cifră a numărului (number % 10) și o adăugăm la suma cifrelor.
+Apoi împărțim numărul la 10 pentru a elimina ultima cifră (number //= 10).
+Procesul se repetă până când numărul devine 0.
+La final, returnăm suma cifrelor.
+'''
+#calculeaza produsul cifrelor unui numar
+def product_of_digits(number):
+    # Inițializăm produsul cu 1
+    product = 1
+    # Convertim numărul în șir de caractere pentru a putea itera prin cifrele sale
+    number_str = str(number)
+    # Iterăm prin fiecare cifră din șirul de caractere
+    for digit_char in number_str:
+        # Convertim caracterul cifrei înapoi în întreg pentru a putea efectua operații matematice
+        digit = int(digit_char)
+        # Înmulțim produsul actual cu cifra
+        product *= digit
+    return product
+
+num = 12345
+print("Produsul cifrelor numărului", num, "este:", product_of_digits(num))
+'''
+Inițializăm produsul (product) cu 1, deoarece orice număr înmulțit cu 1 este egal cu acel număr.
+Convertim numărul într-un șir de caractere (number_str) pentru a putea itera prin cifrele sale.
+Iterăm prin fiecare caracter din șirul de caractere, care reprezintă cifrele numărului.
+Convertim fiecare caracter al cifrei înapoi în întreg (digit) pentru a putea efectua operații matematice.
+Înmulțim produsul actual (product) cu cifra (digit) și actualizăm produsul.
+La final, returnăm produsul cifrelor.
+'''
+
+
+#un nr inversat
+def reverse_number(number):
+    # Convertim numărul în șir de caractere pentru a putea inversa ordinea cifrelor
+    number_str = str(number)
+    # Inversăm șirul de caractere
+    reversed_str = number_str[::-1]
+    # Convertim șirul inversat înapoi în întreg și îl afișăm
+    reversed_number = int(reversed_str)
+    print("Numărul inversat:", reversed_number)
+
+num = 12345
+reverse_number(num)
+'''
+Convertim numărul într-un șir de caractere (number_str) pentru a putea inversa ordinea cifrelor.
+Folosind notarea de "slicing" ([::-1]), inversăm ordinea caracterelor în șirul de caractere, obținând astfel șirul inversat (reversed_str).
+Convertim șirul inversat înapoi în întreg (reversed_number) și îl afișăm.
+'''
+
+
+#transforma prima litera in majuscula
+def capitalize_first_letter(text):
+    # Verificăm dacă șirul are cel puțin un caracter
+    if len(text) > 0:
+        # Transformăm prima literă în majusculă și concatenăm cu restul șirului
+        return text[0].upper() + text[1:]
+    else:
+        # Dacă șirul este gol, returnăm șirul nemodificat
+        return text
+
+input_text = "hello world"
+capitalized_text = capitalize_first_letter(input_text)
+print("Șirul cu prima literă majusculă:", capitalized_text)
+'''
+Verificăm dacă șirul are cel puțin un caracter folosind if len(text) > 0. Dacă șirul este gol, nu putem transforma nicio literă, deci returnăm șirul nemodificat.
+Folosim text[0].upper() pentru a transforma prima literă a șirului în majusculă.
+Concatenăm rezultatul cu restul șirului (de la al doilea caracter înainte).
+Returnăm rezultatul.
+'''
+
+#functie care calculeaza recursiv suma primelor n nr naturale
+def sum_of_first_n_natural_numbers(n):
+    # Cazul de bază: dacă n este 0, suma este 0
+    if n == 0:
+        return 0
+    # Altfel, calculăm suma primelor n numere naturale recursiv, adăugând n la suma primelor n-1 numere naturale
+    else:
+        return n + sum_of_first_n_natural_numbers(n - 1)
+
+n = 5
+print("Suma primelor", n, "numere naturale este:", sum_of_first_n_natural_numbers(n))
+'''
+Cazul de bază al recursivității este atunci când n este 0, caz în care suma primelor n numere naturale este 0.
+În caz contrar, funcția calculează suma primelor n numere naturale recursiv adăugând n la suma primelor n-1 numere naturale.
+'''
+
+#functie care da replace la semnele de exclamare
+def replace_exclamation_marks(text, replacement_char):
+    # Folosim metoda replace() pentru a înlocui toate semnele de exclamare cu caracterul dat
+    modified_text = text.replace("!", replacement_char)
+    return modified_text
+
+input_text = "Hello!!! This is awesome!!!"
+replacement_char = "-"
+modified_text = replace_exclamation_marks(input_text, replacement_char)
+print("Șirul modificat:", modified_text)
+'''
+Folosim metoda replace() a șirului pentru a înlocui toate aparițiile semnelor de exclamare cu caracterul dat (replacement_char).
+Rezultatul este returnat.
+'''
